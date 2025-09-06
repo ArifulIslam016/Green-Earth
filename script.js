@@ -6,11 +6,9 @@ const catagoryLoad = async () => {
   displayCatagory(data.categories);
   // console.log(data.);
 };
-// {
-//     "id": 1,
-//     "category_name": "Fruit Tree",
-//     "small_description": "Trees that bear edible fruits like mango, guava, and jackfruit."
+
 // }
+// Catagory Display here
 const displayCatagory = (datas) => {
   // console.log(data);
   const catagoryContainer = document.getElementById("CatagoryLeft");
@@ -23,14 +21,70 @@ const displayCatagory = (datas) => {
   });
 };
 
+// products load here
 const loadProducts = async (id) => {
   productUrl = `https://openapi.programming-hero.com/api/category/${id}`;
   const res = await fetch(productUrl);
   const data = await res.json();
-  console.log(data);
+  //   console.log(data);
+  displayProducts(data.plants);
 };
+//
+// category
+// :
+// "Shade Tree"
+// description
+// :
+// "A majestic shade tree with a vast canopy and iconic aerial roots. Revered in many cultures, it offers shelter to countless birds and animals."
+// id
+// :
+// 7
+// image
+// :
+// "https://i.ibb.co.com/FkH6MRhR/banyan-min.jpg"
+// name
+// :
+// "Banyan Tree"
+// price
+// :
+// 1200 *****
+//
 
-const displayProducts = () => {};
+// products display here
+const displayProducts = (products) => {
+  const productContainer = document.getElementById("Product-container");
+  productContainer.innerHTML=""
+ products.forEach(product=>{
+    // console.log(product)
+ const newProduct = document.createElement("div");
+ newProduct.innerHTML = `
+    <div class="rounded-lg bg-white p-4  ">
+            <img class="h-48 w-full object-cover rounded-lg" src="${product.image}" alt="" />
+            <h3 onclick="" class="font-semibold text-sm text-[#1F2937] mt-3">
+              ${product.name}
+            </h3>
+            <p class="text-[12px] text-[#71717A] my-2  line-clamp-2">
+              ${product.description}
+            </p>
+            <div class="flex justify-between items-center">
+              <h3 class="bg-[#DCFCE7] px-3 py-1 rounded-full text-[#15803D]">
+                ${product.category}
+              </h3>
+              <h3 class="text-[#1F2937]">৳ <span>${product.price}</span></h3>
+            </div>
+            <button
+              class="bg-[#15803D] text-white font-medium text-[16px] w-full rounded-full mt-3 py-3"
+            >
+              Add to Cart
+            </button>
+          </div>
+    `;
+    productContainer.appendChild(newProduct)
+ })
+ 
+
+ 
+};
 
 catagoryLoad();
 

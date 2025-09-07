@@ -34,7 +34,9 @@ const allplantsLoad = () => {
   const url = "https://openapi.programming-hero.com/api/plants";
   fetch(url)
     .then((res) => res.json())
-    .then((data) => displayProducts(data.plants));
+    .then((data) => {
+      displayProducts(data.plants);
+    });
   //   spinbar(false);
   // console.log(data.plants);
 };
@@ -114,7 +116,9 @@ const displayProducts = (products) => {
 const modalFunc = (id) => {
   fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
     .then((res) => res.json())
-    .then((data) => displayModal(data.plants));
+    .then((data) => {
+      displayModal(data.plants);
+    });
 };
 
 const displayModal = (data) => {
@@ -160,19 +164,22 @@ const displayModal = (data) => {
 const CartFunc = (id) => {
   fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
     .then((res) => res.json())
-    .then((data) => Storecart(data.plants));
+    .then((data) => {
+      Storecart(data.plants);
+    });
 };
 
 const Storecart = (data) => {
   const cartContainer = document.getElementById("carContainer");
   const newCartItem = document.createElement("div");
+  newCartItem.id = `cartItems${data.id}`;
   newCartItem.innerHTML = `
-    <div class="cartItem flex justify-between items-center bg-[#F0FDF4] rounded-lg space-y-1 mb-2 py-2">
+    <div id="Cart${data.id}" class="cartItem flex justify-between items-center bg-[#F0FDF4] rounded-lg space-y-1 mb-2 py-2">
              <div>
                 <h3 class="text-[#1F2937] text-sm font-semibold ">৳ <span>${data.name}</span></h3>
              <h3  class="text-[#8C8C8C]">৳ <span >${data.price}</span> × 1 </h3>
              </div>
-             <button onclick="delAmount()"><i class="fa-solid fa-xmark text-3xl"></i></button>
+             <button onclick="delAmount(${data.id},${data.price})"><i class="fa-solid fa-xmark text-3xl"></i></button>
          </div> 
     
     `;
@@ -182,11 +189,25 @@ const Storecart = (data) => {
   let totalAmount = parseInt(totalAmountElement.innerText);
   totalAmount += parseInt(data.price);
   totalAmountElement.innerText = totalAmount;
-  const delAmount=()=>{
-    
- totalAmount -= parseInt(data.price);
- totalAmountElement.innerText = totalAmount;
-  }
+
+  // removeAfterAmount=(`${data.price}`)
+};
+
+const delAmount = (id, price) => {
+  console.log(id);
+
+  const CartItem = document.getElementById(`cartItems${id}`);
+  console.log(CartItem);
+  //  CartItem.innerHTML=""
+  //  console.log(CartItem)
+  const remCartItem = document.getElementById(`Cart${id}`);
+  CartItem.removeChild(remCartItem);
+
+  const totalAmountElement = document.getElementById("totalAmount");
+  let totalAmount = parseInt(totalAmountElement.innerText);
+  totalAmount -= parseInt(price);
+  totalAmountElement.innerText = totalAmount;
 
 };
+
 catagoryLoad();

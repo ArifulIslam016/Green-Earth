@@ -1,3 +1,13 @@
+// Globals variable and functions
+const catagoryButtons = document.getElementsByClassName("removeCatarogyDesign");
+
+  const removeBgOfCatagory = () => {
+    for (const catagorybutton of catagoryButtons) {
+      catagorybutton.classList.remove("CatagoryButtonD");
+    }
+  };
+
+
 const catagoryLoad = async () => {
   const res = await fetch(
     "https://openapi.programming-hero.com/api/categories"
@@ -7,14 +17,30 @@ const catagoryLoad = async () => {
   // console.log(data.);
 };
 
-// }
+// All Catagory plants here
+const allplantsLoad = () => {
+  const url = "https://openapi.programming-hero.com/api/plants";
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => displayProducts(data.plants));
+  // console.log(data.plants);
+};
+const alltreeBtn = document.getElementById("allTreeBtn");
+alltreeBtn.addEventListener("click", () => {
+    removeBgOfCatagory()
+    alltreeBtn.classList.add("CatagoryButtonD");
+
+  allplantsLoad();
+});
+allplantsLoad();
+
 // Catagory Display here
 const displayCatagory = (datas) => {
   // console.log(data);
   const catagoryContainer = document.getElementById("CatagoryLeft");
   datas.forEach((data) => {
     catagoryContainer.innerHTML += `
-        <button onclick="loadProducts(${data.id})"  class=" bg-[#DCFCE7] border-none font-medium py-2 text-[#1F2937] cursor-default w-full text-left hover:bg-[#15803D] px-2 rounded-md">
+        <button  onclick="loadProducts(${data.id})" id="${data.id}"  class=" bg-[#DCFCE7] border-none font-medium py-2 my-2 text-[#1F2937] cursor-default w-full text-left hover:bg-[#15803D] px-2 rounded-md removeCatarogyDesign ">
      ${data.category_name}
     </button>
         `;
@@ -23,11 +49,16 @@ const displayCatagory = (datas) => {
 
 // products load here
 const loadProducts = async (id) => {
+  
+
+  removeBgOfCatagory()
   productUrl = `https://openapi.programming-hero.com/api/category/${id}`;
   const res = await fetch(productUrl);
   const data = await res.json();
   //   console.log(data);
   displayProducts(data.plants);
+
+  document.getElementById(id).classList.add("CatagoryButtonD");
 };
 //
 // category
@@ -53,11 +84,11 @@ const loadProducts = async (id) => {
 // products display here
 const displayProducts = (products) => {
   const productContainer = document.getElementById("Product-container");
-  productContainer.innerHTML=""
- products.forEach(product=>{
+  productContainer.innerHTML = "";
+  products.forEach((product) => {
     // console.log(product)
- const newProduct = document.createElement("div");
- newProduct.innerHTML = `
+    const newProduct = document.createElement("div");
+    newProduct.innerHTML = `
     <div class="rounded-lg bg-white p-4  ">
             <img class="h-48 w-full object-cover rounded-lg" src="${product.image}" alt="" />
             <h3 onclick="" class="font-semibold text-sm text-[#1F2937] mt-3">
@@ -79,11 +110,8 @@ const displayProducts = (products) => {
             </button>
           </div>
     `;
-    productContainer.appendChild(newProduct)
- })
- 
-
- 
+    productContainer.appendChild(newProduct);
+  });
 };
 
 catagoryLoad();

@@ -17,22 +17,43 @@ const catagoryLoad = async () => {
   // console.log(data.);
 };
 
+
+
+
 // All Catagory plants here
+
+// spinbar here
+const spinbar = (situation) => {
+  if (situation == true) {
+    document.getElementById("spinbar").classList.remove("hidden");
+    document.getElementById("Product-container").classList.add("hidden");
+
+  } else {
+    document.getElementById("spinbar").classList.add("hidden");
+    document.getElementById("Product-container").classList.remove("hidden");
+  
+  }
+};
+
+
 const allplantsLoad = () => {
+  spinbar(true);
   const url = "https://openapi.programming-hero.com/api/plants";
   fetch(url)
     .then((res) => res.json())
     .then((data) => displayProducts(data.plants));
+//   spinbar(false);
   // console.log(data.plants);
 };
 const alltreeBtn = document.getElementById("allTreeBtn");
 alltreeBtn.addEventListener("click", () => {
-    removeBgOfCatagory()
-    alltreeBtn.classList.add("CatagoryButtonD");
+  removeBgOfCatagory();
+  alltreeBtn.classList.add("CatagoryButtonD");
 
   allplantsLoad();
 });
 allplantsLoad();
+
 
 // Catagory Display here
 const displayCatagory = (datas) => {
@@ -49,7 +70,7 @@ const displayCatagory = (datas) => {
 
 // products load here
 const loadProducts = async (id) => {
-  
+ spinbar(true);
 
   removeBgOfCatagory()
   productUrl = `https://openapi.programming-hero.com/api/category/${id}`;
@@ -60,30 +81,13 @@ const loadProducts = async (id) => {
 
   document.getElementById(id).classList.add("CatagoryButtonD");
 };
-//
-// category
-// :
-// "Shade Tree"
-// description
-// :
-// "A majestic shade tree with a vast canopy and iconic aerial roots. Revered in many cultures, it offers shelter to countless birds and animals."
-// id
-// :
-// 7
-// image
-// :
-// "https://i.ibb.co.com/FkH6MRhR/banyan-min.jpg"
-// name
-// :
-// "Banyan Tree"
-// price
-// :
-// 1200 *****
-//
+
 
 // products display here
 const displayProducts = (products) => {
-  const productContainer = document.getElementById("Product-container");
+   
+ const productContainer = document.getElementById("Product-container");
+  
   productContainer.innerHTML = "";
   products.forEach((product) => {
     // console.log(product)
@@ -112,6 +116,7 @@ const displayProducts = (products) => {
     `;
     productContainer.appendChild(newProduct);
   });
+  spinbar(false)
 };
 
 catagoryLoad();

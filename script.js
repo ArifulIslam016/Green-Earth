@@ -1,12 +1,11 @@
 // Globals variable and functions
 const catagoryButtons = document.getElementsByClassName("removeCatarogyDesign");
 
-  const removeBgOfCatagory = () => {
-    for (const catagorybutton of catagoryButtons) {
-      catagorybutton.classList.remove("CatagoryButtonD");
-    }
-  };
-
+const removeBgOfCatagory = () => {
+  for (const catagorybutton of catagoryButtons) {
+    catagorybutton.classList.remove("CatagoryButtonD");
+  }
+};
 
 const catagoryLoad = async () => {
   const res = await fetch(
@@ -17,9 +16,6 @@ const catagoryLoad = async () => {
   // console.log(data.);
 };
 
-
-
-
 // All Catagory plants here
 
 // spinbar here
@@ -27,14 +23,11 @@ const spinbar = (situation) => {
   if (situation == true) {
     document.getElementById("spinbar").classList.remove("hidden");
     document.getElementById("Product-container").classList.add("hidden");
-
   } else {
     document.getElementById("spinbar").classList.add("hidden");
     document.getElementById("Product-container").classList.remove("hidden");
-  
   }
 };
-
 
 const allplantsLoad = () => {
   spinbar(true);
@@ -42,9 +35,10 @@ const allplantsLoad = () => {
   fetch(url)
     .then((res) => res.json())
     .then((data) => displayProducts(data.plants));
-//   spinbar(false);
+  //   spinbar(false);
   // console.log(data.plants);
 };
+// all tree button here
 const alltreeBtn = document.getElementById("allTreeBtn");
 alltreeBtn.addEventListener("click", () => {
   removeBgOfCatagory();
@@ -53,7 +47,6 @@ alltreeBtn.addEventListener("click", () => {
   allplantsLoad();
 });
 allplantsLoad();
-
 
 // Catagory Display here
 const displayCatagory = (datas) => {
@@ -70,24 +63,23 @@ const displayCatagory = (datas) => {
 
 // products load here
 const loadProducts = async (id) => {
- spinbar(true);
+  spinbar(true);
 
-  removeBgOfCatagory()
+  removeBgOfCatagory();
   productUrl = `https://openapi.programming-hero.com/api/category/${id}`;
   const res = await fetch(productUrl);
   const data = await res.json();
   //   console.log(data);
   displayProducts(data.plants);
+  //   modalFunc(data.plants)
 
   document.getElementById(id).classList.add("CatagoryButtonD");
 };
 
-
 // products display here
 const displayProducts = (products) => {
-   
- const productContainer = document.getElementById("Product-container");
-  
+  const productContainer = document.getElementById("Product-container");
+
   productContainer.innerHTML = "";
   products.forEach((product) => {
     // console.log(product)
@@ -95,7 +87,7 @@ const displayProducts = (products) => {
     newProduct.innerHTML = `
     <div class="rounded-lg bg-white p-4  ">
             <img class="h-48 w-full object-cover rounded-lg" src="${product.image}" alt="" />
-            <h3 onclick="" class="font-semibold text-sm text-[#1F2937] mt-3">
+            <h3 onclick="modalFunc(${product.id})" class="font-semibold text-sm text-[#1F2937] mt-3">
               ${product.name}
             </h3>
             <p class="text-[12px] text-[#71717A] my-2  line-clamp-2">
@@ -116,11 +108,100 @@ const displayProducts = (products) => {
     `;
     productContainer.appendChild(newProduct);
   });
-  spinbar(false)
+  spinbar(false);
 };
+
+const modalFunc = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
+    .then((res) => res.json())
+    .then((data) => displayModal(data.plants));
+};
+
+const displayModal = (data) => {
+  // const modalDetails = document.getElementById("modalDetails");
+  const modalDetails = document.getElementById("my_modal_5");
+  modalDetails.innerHTML = " ";
+  const newModalDetails = document.createElement("div");
+newModalDetails.innerHTML = `
+  <div class="modal-box">
+<div class="rounded-lg bg-white p-2  ">
+            <img class="w-full object-cover rounded-lg" src="${data.image}" alt="" />
+            <h3  class="font-semibold text-sm text-[#1F2937] mt-3">
+              ${data.name}
+            </h3>
+            <p class="text-[16px] text-[#1d1d1f] my-3 ">
+              ${data.description}
+            </p>
+            <div class="flex justify-between items-center">
+              <h3 class="bg-[#DCFCE7] px-3 py-2 rounded-full text-[#15803D]">
+                ${data.category}
+              </h3>
+              <h3 class="text-[#1F2937]">৳ <span>${data.price}</span></h3>
+            </div>
+           
+           
+          </div>
+          <div class="modal-action">
+                <form method="dialog">
+                  <!-- if there is a button in form, it will close the modal -->
+                  <button class="btn">Close</button>
+                </form>
+              </div>
+              </div>
+
+
+`;
+  modalDetails.appendChild(newModalDetails);
+
+  document.getElementById("my_modal_5").showModal(data);
+};
+
+// {
+//     "status": true,
+//     "message": "successfully fetched plant data",
+//     "plants": {
+//         "id": 1,
+//         "image": "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg",
+//         "name": "Mango Tree",
+//         "description": "A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green canopy offers shade, while its sweet fruits are rich in vitamins and minerals.",
+//         "category": "Fruit Tree",
+//         "price": 500
+//     }
+// }
 
 catagoryLoad();
 
-// <button  class="btn bg-[#DCFCE7] border-none ">
-//   <li class="text-[16px] cursor-default font-medium text-[#1F2937]">${data.category_name}</li>
-// </button>
+
+
+
+
+
+//   newModalDetails.innerHTML = ` <div class="rounded-lg bg-white p-4  ">
+//             <img class=" w-full object-cover rounded-lg" src="${data.image}" alt="" />
+//             <h3  class="font-semibold text-sm text-[#1F2937] mt-3">
+//               ${data.name}
+//             </h3>
+//             <p class="text-[12px] text-[#71717A] my-2 ">
+//               ${data.description}
+//             </p>
+//             <div class="flex justify-between items-center">
+//               <h3 class="bg-[#DCFCE7] px-3 py-1 rounded-full text-[#15803D]">
+//                 ${data.category}
+//               </h3>
+//               <h3 class="text-[#1F2937]">৳ <span>${data.price}</span></h3>
+//             </div>
+//             <button
+//               class="bg-[#15803D] text-white font-medium text-[16px] w-full rounded-full mt-3 py-3"
+//             >
+//               Add to Cart
+//             </button>
+//           </div>
+//           <div class="modal-action">
+//                 <form method="dialog">
+//                   <!-- if there is a button in form, it will close the modal -->
+//                   <button class="btn">Close</button>
+//                 </form>
+//               </div>
+
+
+// `;

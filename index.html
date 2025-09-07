@@ -20,8 +20,9 @@
       * {
         font-family: "Inter", sans-serif;
       }
-      .CatagoryButtonD{ background-color:#15803D ;
-        color: #FFFFFF;
+      .CatagoryButtonD {
+        background-color: #15803d;
+        color: #ffffff;
       }
     </style>
   </head>
@@ -110,17 +111,24 @@
         <!-- Catagory Section -->
         <div class="catagoryLeft bg-red">
           <h1 class="text-xl font-semibold text-[#000000] pb-4">Categories</h1>
-          <button  id="allTreeBtn"  class=" w-full text-[#1F2937] text-left px-2 CatagoryButtonD rounded-md p-2 removeCatarogyDesign hover:bg-[#15803D] ">All trees</button>
+          <button
+            id="allTreeBtn"
+            class="w-full text-[#1F2937] text-left px-2 CatagoryButtonD rounded-md p-2 removeCatarogyDesign hover:bg-[#15803D]"
+          >
+            All trees
+          </button>
           <div id="CatagoryLeft" class="text-left"></div>
         </div>
         <!-- Products Section starts from here -->
-         <div id="spinbar" class="flex justify-center px-1 col-span-4 hidden"><span class="loading loading-dots loading-xl"></span></div>
+        <div id="spinbar" class="flex justify-center px-1 col-span-4 hidden">
+          <span class="loading loading-dots loading-xl"></span>
+        </div>
         <div
           id="Product-container"
-          class="productcenter col-span-4 grid grid-cols-3 gap-[30px]  auto-rows-fr"
-        >
-        
-        </div>
+          class="productcenter col-span-4 grid grid-cols-3 gap-[30px] auto-rows-fr"
+        ></div>
+        <!-- html MOdal here -->
+       
         <!-- Cart sections starts from here -->
         <div class="cartRight bg-red-600">
           <h6>
@@ -133,6 +141,15 @@
           </h6>
         </div>
       </section>
+       <section>
+          <!-- Open the modal using ID.showModal() method -->
+          <!-- <button class="btn" onclick="my_modal_5.showModal()">
+            open modal
+          </button> -->
+          <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+            
+          </dialog>
+        </section>
     </main>
     <script src="./script.js"></script>
   </body>

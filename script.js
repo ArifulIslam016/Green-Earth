@@ -48,7 +48,7 @@ alltreeBtn.addEventListener("click", () => {
 
   allplantsLoad();
 });
-// allplantsLoad();
+allplantsLoad();
 
 // Catagory Display here
 const displayCatagory = (datas) => {

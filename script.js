@@ -87,7 +87,7 @@ const displayProducts = (products) => {
     newProduct.innerHTML = `
     <div class="rounded-lg bg-white p-4  ">
             <img class="h-48 w-full object-cover rounded-lg" src="${product.image}" alt="" />
-            <h3 onclick="modalFunc(${product.id})" class="font-semibold text-sm text-[#1F2937] mt-3">
+            <h3 onclick="modalFunc(${product.id})" class="font-semibold text-sm text-[#1F2937] cursor-pointer mt-3">
               ${product.name}
             </h3>
             <p class="text-[12px] text-[#71717A] my-2  line-clamp-2">
@@ -99,7 +99,7 @@ const displayProducts = (products) => {
               </h3>
               <h3 class="text-[#1F2937]">৳ <span>${product.price}</span></h3>
             </div>
-            <button
+            <button onclick="CartFunc(${product.id})"
               class="bg-[#15803D] text-white font-medium text-[16px] w-full rounded-full mt-3 py-3"
             >
               Add to Cart
@@ -122,7 +122,7 @@ const displayModal = (data) => {
   const modalDetails = document.getElementById("my_modal_5");
   modalDetails.innerHTML = " ";
   const newModalDetails = document.createElement("div");
-newModalDetails.innerHTML = `
+  newModalDetails.innerHTML = `
   <div class="modal-box">
 <div class="rounded-lg bg-white p-2  ">
             <img class="w-full object-cover rounded-lg" src="${data.image}" alt="" />
@@ -156,52 +156,37 @@ newModalDetails.innerHTML = `
   document.getElementById("my_modal_5").showModal(data);
 };
 
-// {
-//     "status": true,
-//     "message": "successfully fetched plant data",
-//     "plants": {
-//         "id": 1,
-//         "image": "https://i.ibb.co.com/cSQdg7tf/mango-min.jpg",
-//         "name": "Mango Tree",
-//         "description": "A fast-growing tropical tree that produces delicious, juicy mangoes during summer. Its dense green canopy offers shade, while its sweet fruits are rich in vitamins and minerals.",
-//         "category": "Fruit Tree",
-//         "price": 500
-//     }
-// }
+// Cart Funcload
+const CartFunc = (id) => {
+  fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
+    .then((res) => res.json())
+    .then((data) => Storecart(data.plants));
+};
 
+const Storecart = (data) => {
+  const cartContainer = document.getElementById("carContainer");
+  const newCartItem = document.createElement("div");
+  newCartItem.innerHTML = `
+    <div class="cartItem flex justify-between items-center bg-[#F0FDF4] rounded-lg space-y-1 mb-2 py-2">
+             <div>
+                <h3 class="text-[#1F2937] text-sm font-semibold ">৳ <span>${data.name}</span></h3>
+             <h3  class="text-[#8C8C8C]">৳ <span >${data.price}</span> × 1 </h3>
+             </div>
+             <button onclick="delAmount()"><i class="fa-solid fa-xmark text-3xl"></i></button>
+         </div> 
+    
+    `;
+  cartContainer.appendChild(newCartItem);
+
+  const totalAmountElement = document.getElementById("totalAmount");
+  let totalAmount = parseInt(totalAmountElement.innerText);
+  totalAmount += parseInt(data.price);
+  totalAmountElement.innerText = totalAmount;
+  const delAmount=()=>{
+    
+ totalAmount -= parseInt(data.price);
+ totalAmountElement.innerText = totalAmount;
+  }
+
+};
 catagoryLoad();
-
-
-
-
-
-
-//   newModalDetails.innerHTML = ` <div class="rounded-lg bg-white p-4  ">
-//             <img class=" w-full object-cover rounded-lg" src="${data.image}" alt="" />
-//             <h3  class="font-semibold text-sm text-[#1F2937] mt-3">
-//               ${data.name}
-//             </h3>
-//             <p class="text-[12px] text-[#71717A] my-2 ">
-//               ${data.description}
-//             </p>
-//             <div class="flex justify-between items-center">
-//               <h3 class="bg-[#DCFCE7] px-3 py-1 rounded-full text-[#15803D]">
-//                 ${data.category}
-//               </h3>
-//               <h3 class="text-[#1F2937]">৳ <span>${data.price}</span></h3>
-//             </div>
-//             <button
-//               class="bg-[#15803D] text-white font-medium text-[16px] w-full rounded-full mt-3 py-3"
-//             >
-//               Add to Cart
-//             </button>
-//           </div>
-//           <div class="modal-action">
-//                 <form method="dialog">
-//                   <!-- if there is a button in form, it will close the modal -->
-//                   <button class="btn">Close</button>
-//                 </form>
-//               </div>
-
-
-// `;

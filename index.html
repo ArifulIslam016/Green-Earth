@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Green Earth</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -127,29 +129,28 @@
           id="Product-container"
           class="productcenter col-span-4 grid grid-cols-3 gap-[30px] auto-rows-fr"
         ></div>
-        <!-- html MOdal here -->
-       
+    
         <!-- Cart sections starts from here -->
-        <div class="cartRight bg-red-600">
-          <h6>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia,
-            veniam ut, placeat itaque similique corrupti repellendus praesentium
-            alias totam voluptatem unde. Recusandae, sequi. Suscipit, inventore!
-            Pariatur incidunt nihil recusandae officiis. Officiis cupiditate
-            sequi cum possimus molestias hic temporibus numquam earum corrupti
-            amet eveniet aspernatur odit atque tempore quidem, eos nihil!
-          </h6>
+        <div  class="cartRight rounded-2xl bg-white p-4">
+            <h1 class="font-semibold text-xl text-[#000000]">Your Cart</h1>
+          
+            <div id="carContainer">
+
+            </div>
+            <div class="flex justify-between  font-semibold text-[16px] text-[#1F2937]">
+             <h2>Total:</h2>
+             <h2>৳ <span id="totalAmount"> 0</span></h2>
+            </div>
         </div>
+       
       </section>
-       <section>
-          <!-- Open the modal using ID.showModal() method -->
-          <!-- <button class="btn" onclick="my_modal_5.showModal()">
-            open modal
-          </button> -->
-          <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
-            
-          </dialog>
-        </section>
+      <!-- Modal section here -->
+      <section>
+        <dialog
+          id="my_modal_5"
+          class="modal modal-bottom sm:modal-middle"
+        ></dialog>
+      </section>
     </main>
     <script src="./script.js"></script>
   </body>
